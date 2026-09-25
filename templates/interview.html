@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Mock Interview</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+
+        .interview-container {
+            max-width: 1050px;
+            margin: 45px auto;
+            padding: 20px;
+        }
+
+        .interview-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .interview-header h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+            color: #222;
+        }
+
+        .interview-header p {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .ai-badge {
+            display: inline-block;
+            background: #eef2ff;
+            color: #4f46e5;
+            padding: 7px 15px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        /* INFO CARDS */
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-bottom: 30px;
+        }
+
+        .info-card {
+            background: white;
+            padding: 22px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+        }
+
+        .info-icon {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .info-card h3 {
+            margin: 5px 0;
+            color: #222;
+        }
+
+        .info-card p {
+            margin: 0;
+            color: #777;
+            font-size: 13px;
+        }
+
+        /* FORM */
+
+        .interview-form-card {
+            background: white;
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.07);
+        }
+
+        .form-title {
+            font-size: 24px;
+            margin-bottom: 8px;
+            color: #222;
+        }
+
+        .form-subtitle {
+            color: #777;
+            margin-bottom: 28px;
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 13px 15px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 15px;
+            box-sizing: border-box;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.08);
+        }
+
+        .field-help {
+            color: #888;
+            font-size: 12px;
+            margin-top: 6px;
+        }
+
+        /* TWO COLUMN */
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        /* QUESTION COUNT */
+
+        .question-count-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .count-option {
+            position: relative;
+        }
+
+        .count-option input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .count-option label {
+            display: block;
+            text-align: center;
+            padding: 12px 8px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #555;
+            transition: 0.2s;
+        }
+
+        .count-option input:checked + label {
+            background: #4f46e5;
+            color: white;
+            border-color: #4f46e5;
+        }
+
+        /* CUSTOM COUNT */
+
+        #custom-count-wrapper {
+            display: none;
+            margin-top: 15px;
+        }
+
+        /* BUTTON */
+
+        .start-button {
+            width: 100%;
+            border: none;
+            padding: 15px;
+            border-radius: 11px;
+            background: #4f46e5;
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 10px;
+        }
+
+        .start-button:hover {
+            background: #4338ca;
+            transform: translateY(-1px);
+        }
+
+        /* GUIDELINES */
+
+        .guidelines {
+            margin-top: 25px;
+            padding: 20px;
+            background: #f8faff;
+            border-radius: 14px;
+        }
+
+        .guidelines h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .guidelines ul {
+            margin-bottom: 0;
+            padding-left: 20px;
+            color: #666;
+            line-height: 1.8;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 800px) {
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .question-count-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            .interview-container {
+                margin: 20px auto;
+                padding: 12px;
+            }
+
+            .interview-header h1 {
+                font-size: 28px;
+            }
+
+            .interview-form-card {
+                padding: 22px;
+            }
+
+            .question-count-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    {% include 'navbar.html' ignore missing %}
+
+    <div class="interview-container">
+
+        <!-- HEADER -->
+
+        <div class="interview-header">
+
+            <div class="ai-badge">
+                🤖 AI Powered Interview
+            </div>
+
+            <h1>
+                Start Your Mock Interview
+            </h1>
+
+            <p>
+                Choose any field, topic, difficulty and number of questions
+                to practice for your interview.
+            </p>
+
+        </div>
+
+
+        <!-- INFO -->
+
+        <div class="info-grid">
+
+            <div class="info-card">
+
+                <div class="info-icon">
+                    🎯
+                </div>
+
+                <h3>
+                    Any Field
+                </h3>
+
+                <p>
+                    Python, Java, HR, Marketing, Finance or any field.
+                </p>
+
+            </div>
+
+
+            <div class="info-card">
+
+                <div class="info-icon">
+                    🧠
+                </div>
+
+                <h3>
+                    Dynamic Questions
+                </h3>
+
+                <p>
+                    Questions based on your selected field and topic.
+                </p>
+
+            </div>
+
+
+            <div class="info-card">
+
+                <div class="info-icon">
+                    📊
+                </div>
+
+                <h3>
+                    AI Evaluation
+                </h3>
+
+                <p>
+                    Get score and feedback after answering.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- FORM -->
+
+        <div class="interview-form-card">
+
+            <h2 class="form-title">
+                Configure Your Interview
+            </h2>
+
+            <p class="form-subtitle">
+                Enter your interview requirements below.
+            </p>
+
+
+            <form action="{{ url_for('interview') }}" method="POST">
+
+                <!-- FIELD -->
+
+                <div class="form-group">
+
+                    <label for="interview_field">
+                        Interview Field *
+                    </label>
+
+                    <input
+                        type="text"
+                        id="interview_field"
+                        name="interview_field"
+                        placeholder="Example: Python, Web Development, Finance, Sales..."
+                        required
+                    >
+
+                    <div class="field-help">
+                        You can enter any career field or technology.
+                    </div>
+
+                </div>
+
+
+                <!-- TOPIC -->
+
+                <div class="form-group">
+
+                    <label for="topic">
+                        Topic / Skill
+                    </label>
+
+                    <input
+                        type="text"
+                        id="topic"
+                        name="topic"
+                        placeholder="Example: OOP, React, Digital Marketing, Accounting..."
+                    >
+
+                    <div class="field-help">
+                        Optional. Leave blank for questions from the complete field.
+                    </div>
+
+                </div>
+
+
+                <!-- DIFFICULTY + LANGUAGE -->
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label for="difficulty">
+                            Difficulty
+                        </label>
+
+                        <select id="difficulty"
+                                name="difficulty">
+
+                            <option value="Easy">
+                                Easy
+                            </option>
+
+                            <option value="Medium" selected>
+                                Medium
+                            </option>
+
+                            <option value="Hard">
+                                Hard
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="language">
+                            Interview Language
+                        </label>
+
+                        <select id="language"
+                                name="language">
+
+                            <option value="English" selected>
+                                English
+                            </option>
+
+                            <option value="Hindi">
+                                Hindi
+                            </option>
+
+                            <option value="Hinglish">
+                                Hinglish
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- QUESTION COUNT -->
+
+                <div class="form-group">
+
+                    <label>
+                        Number of Questions
+                    </label>
+
+                    <div class="question-count-grid">
+
+                        <div class="count-option">
+
+                            <input
+                                type="radio"
+                                id="q5"
+                                name="question_count"
+                                value="5"
+                                checked
+                            >
+
+                            <label for="q5">
+                                5
+                            </label>
+
+                        </div>
+
+
+                        <div class="count-option">
+
+                            <input
+                                type="radio"
+                                id="q10"
+                                name="question_count"
+                                value="10"
+                            >
+
+                            <label for="q10">
+                                10
+                            </label>
+
+                        </div>
+
+
+                        <div class="count-option">
+
+                            <input
+                                type="radio"
+                                id="q20"
+                                name="question_count"
+                                value="20"
+                            >
+
+                            <label for="q20">
+                                20
+                            </label>
+
+                        </div>
+
+
+                        <div class="count-option">
+
+                            <input
+                                type="radio"
+                                id="q50"
+                                name="question_count"
+                                value="50"
+                            >
+
+                            <label for="q50">
+                                50
+                            </label>
+
+                        </div>
+
+
+                        <div class="count-option">
+
+                            <input
+                                type="radio"
+                                id="qcustom"
+                                name="question_count"
+                                value="custom"
+                            >
+
+                            <label for="qcustom">
+                                Custom
+                            </label>
+
+                        </div>
+
+                    </div>
+
+
+                    <div id="custom-count-wrapper">
+
+                        <input
+                            type="number"
+                            id="custom_count"
+                            name="custom_count"
+                            min="1"
+                            max="100"
+                            placeholder="Enter number of questions (1-100)"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- START -->
+
+                <button
+                    type="submit"
+                    class="start-button"
+                >
+                    🚀 Start Interview
+                </button>
+
+            </form>
+
+
+            <!-- GUIDELINES -->
+
+            <div class="guidelines">
+
+                <h3>
+                    📌 Interview Guidelines
+                </h3>
+
+                <ul>
+
+                    <li>
+                        Choose the field you want to practice.
+                    </li>
+
+                    <li>
+                        Add a specific topic if you want focused questions.
+                    </li>
+
+                    <li>
+                        Select your preferred difficulty level.
+                    </li>
+
+                    <li>
+                        You can practice from 1 to 100 questions.
+                    </li>
+
+                    <li>
+                        Try to answer each question clearly and professionally.
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        const questionOptions =
+            document.querySelectorAll(
+                'input[name="question_count"]'
+            );
+
+        const customWrapper =
+            document.getElementById(
+                "custom-count-wrapper"
+            );
+
+        const customInput =
+            document.getElementById(
+                "custom_count"
+            );
+
+
+        questionOptions.forEach(function(option) {
+
+            option.addEventListener("change", function() {
+
+                if (this.value === "custom") {
+
+                    customWrapper.style.display = "block";
+
+                    customInput.required = true;
+
+                } else {
+
+                    customWrapper.style.display = "none";
+
+                    customInput.required = false;
+
+                    customInput.value = "";
+
+                }
+
+            });
+
+        });
+
+    </script>
+
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+
+</html>

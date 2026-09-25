@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Resume Interview Report | AI Interview Preparation</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+
+        body {
+            background: #f5f7fb;
+        }
+
+        .report-container {
+            max-width: 1100px;
+            margin: 45px auto;
+            padding: 20px;
+        }
+
+        .report-header {
+            background: white;
+            border-radius: 20px;
+            padding: 35px;
+            text-align: center;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.07);
+            margin-bottom: 25px;
+        }
+
+        .success-icon {
+            width: 75px;
+            height: 75px;
+            margin: 0 auto 15px;
+            border-radius: 50%;
+            background: #f0fdf4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 34px;
+        }
+
+        .report-header h1 {
+            margin: 0;
+            color: #222;
+            font-size: 30px;
+        }
+
+        .report-header p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 7px 14px;
+            margin-top: 5px;
+            border-radius: 20px;
+            background: #eef2ff;
+            color: #4f46e5;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        /* SUMMARY */
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .summary-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.06);
+        }
+
+        .summary-icon {
+            font-size: 27px;
+            margin-bottom: 8px;
+        }
+
+        .summary-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: #4f46e5;
+        }
+
+        .summary-label {
+            margin-top: 5px;
+            color: #777;
+            font-size: 14px;
+        }
+
+        /* FEEDBACK */
+
+        .feedback-card {
+            background: white;
+            border-radius: 18px;
+            padding: 28px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+        }
+
+        .feedback-card h2 {
+            margin-top: 0;
+            color: #222;
+        }
+
+        .feedback-message {
+            background: #f8faff;
+            border-left: 5px solid #4f46e5;
+            padding: 18px;
+            border-radius: 10px;
+            color: #555;
+            line-height: 1.7;
+        }
+
+        /* STRENGTHS */
+
+        .feedback-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .strengths,
+        .improvements {
+            padding: 20px;
+            border-radius: 14px;
+        }
+
+        .strengths {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+        }
+
+        .improvements {
+            background: #fff7ed;
+            border: 1px solid #fed7aa;
+        }
+
+        .strengths h3 {
+            color: #166534;
+        }
+
+        .improvements h3 {
+            color: #9a3412;
+        }
+
+        .feedback-list {
+            margin: 10px 0 0;
+            padding-left: 20px;
+        }
+
+        .feedback-list li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        /* QUESTIONS */
+
+        .question-result {
+            background: white;
+            border-radius: 18px;
+            padding: 28px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+        }
+
+        .question-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 18px;
+        }
+
+        .question-number {
+            font-weight: 700;
+            color: #222;
+            font-size: 18px;
+        }
+
+        .question-score {
+            background: #eef2ff;
+            color: #4f46e5;
+            padding: 7px 13px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .question-text {
+            background: #f8faff;
+            border-left: 4px solid #4f46e5;
+            padding: 16px;
+            border-radius: 10px;
+            color: #333;
+            line-height: 1.6;
+            margin-bottom: 18px;
+        }
+
+        .section-label {
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #777;
+            margin-bottom: 8px;
+        }
+
+        .answer-box {
+            background: #fafafa;
+            border: 1px solid #e7e9ef;
+            padding: 16px;
+            border-radius: 10px;
+            color: #555;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            margin-bottom: 18px;
+        }
+
+        .evaluation-box {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            padding: 16px;
+            border-radius: 10px;
+            color: #166534;
+            line-height: 1.6;
+        }
+
+        /* BUTTONS */
+
+        .action-buttons {
+            background: white;
+            border-radius: 18px;
+            padding: 25px;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+        }
+
+        .action-button {
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 9px;
+            font-weight: 600;
+        }
+
+        .primary-button {
+            background: #4f46e5;
+            color: white;
+        }
+
+        .secondary-button {
+            background: #eef2ff;
+            color: #4f46e5;
+        }
+
+        .action-button:hover {
+            transform: translateY(-1px);
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 850px) {
+
+            .summary-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .feedback-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 550px) {
+
+            .report-container {
+                margin: 20px auto;
+                padding: 12px;
+            }
+
+            .report-header {
+                padding: 25px 20px;
+            }
+
+            .report-header h1 {
+                font-size: 25px;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .question-result,
+            .feedback-card {
+                padding: 20px;
+            }
+
+            .question-top {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .action-button {
+                text-align: center;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    {% include 'navbar.html' ignore missing %}
+
+    <div class="report-container">
+
+        <!-- HEADER -->
+
+        <div class="report-header">
+
+            <div class="success-icon">
+                ✅
+            </div>
+
+            <h1>
+                Resume Interview Completed
+            </h1>
+
+            <span class="badge">
+                Resume Based Interview
+            </span>
+
+            <p>
+                Here is your complete performance report based on
+                your resume interview answers.
+            </p>
+
+        </div>
+
+
+        <!-- SUMMARY -->
+
+        <div class="summary-grid">
+
+            <div class="summary-card">
+
+                <div class="summary-icon">
+                    ⭐
+                </div>
+
+                <div class="summary-value">
+                    {{ average_score }}/10
+                </div>
+
+                <div class="summary-label">
+                    Average Score
+                </div>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <div class="summary-icon">
+                    📝
+                </div>
+
+                <div class="summary-value">
+                    {{ total_questions }}
+                </div>
+
+                <div class="summary-label">
+                    Questions
+                </div>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <div class="summary-icon">
+                    🎯
+                </div>
+
+                <div class="summary-value">
+                    {{ total_score }}
+                </div>
+
+                <div class="summary-label">
+                    Total Score
+                </div>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <div class="summary-icon">
+                    📈
+                </div>
+
+                <div class="summary-value">
+                    {{ percentage }}%
+                </div>
+
+                <div class="summary-label">
+                    Performance
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- OVERALL FEEDBACK -->
+
+        <div class="feedback-card">
+
+            <h2>
+                📊 Overall Feedback
+            </h2>
+
+            <div class="feedback-message">
+
+                {{ performance_message }}
+
+            </div>
+
+        </div>
+
+
+        <!-- STRENGTHS & IMPROVEMENTS -->
+
+        <div class="feedback-card">
+
+            <div class="feedback-grid">
+
+                <div class="strengths">
+
+                    <h3>
+                        💪 Strengths
+                    </h3>
+
+                    <ul class="feedback-list">
+
+                        {% for strength in strengths %}
+
+                            <li>
+                                {{ strength }}
+                            </li>
+
+                        {% endfor %}
+
+                    </ul>
+
+                </div>
+
+
+                <div class="improvements">
+
+                    <h3>
+                        🎯 Areas to Improve
+                    </h3>
+
+                    <ul class="feedback-list">
+
+                        {% for improvement in improvements %}
+
+                            <li>
+                                {{ improvement }}
+                            </li>
+
+                        {% endfor %}
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- QUESTION RESULTS -->
+
+        <div class="feedback-card">
+
+            <h2>
+                📝 Question-by-Question Analysis
+            </h2>
+
+        </div>
+
+
+        {% for result in results %}
+
+            <div class="question-result">
+
+                <div class="question-top">
+
+                    <div class="question-number">
+                        Question {{ result.question_number }}
+                    </div>
+
+                    <div class="question-score">
+                        Score: {{ result.score }}/10
+                    </div>
+
+                </div>
+
+
+                <!-- QUESTION -->
+
+                <div class="section-label">
+                    Question
+                </div>
+
+                <div class="question-text">
+
+                    {{ result.question }}
+
+                </div>
+
+
+                <!-- ANSWER -->
+
+                <div class="section-label">
+                    Your Answer
+                </div>
+
+                <div class="answer-box">
+
+                    {% if result.answer %}
+                        {{ result.answer }}
+                    {% else %}
+                        No answer provided.
+                    {% endif %}
+
+                </div>
+
+
+                <!-- EVALUATION -->
+
+                <div class="section-label">
+                    AI Evaluation
+                </div>
+
+                <div class="evaluation-box">
+
+                    {{ result.evaluation }}
+
+                </div>
+
+            </div>
+
+        {% endfor %}
+
+
+        <!-- ACTION BUTTONS -->
+
+        <div class="action-buttons">
+
+            <a
+                href="{{ url_for('resume_interview') }}"
+                class="action-button primary-button"
+            >
+                🔄 Retake Resume Interview
+            </a>
+
+            <a
+                href="{{ url_for('history') }}"
+                class="action-button secondary-button"
+            >
+                📊 View History
+            </a>
+
+            <a
+                href="{{ url_for('resume') }}"
+                class="action-button secondary-button"
+            >
+                📄 Resume Analysis
+            </a>
+
+            <a
+                href="{{ url_for('dashboard') }}"
+                class="action-button secondary-button"
+            >
+                🏠 Dashboard
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Interview Result | AI Interview Prep</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+        <div class="container">
+
+            <div class="logo">
+                AI Interview Prep
+            </div>
+
+            <ul class="nav-links">
+
+                <li>
+                    <a href="/dashboard">Dashboard</a>
+                </li>
+
+                <li>
+                    <a href="/interview">New Interview</a>
+                </li>
+
+                <li>
+                    <a href="/logout">Logout</a>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </nav>
+
+
+    <!-- RESULT -->
+
+    <main class="result-container">
+
+        <div class="result-box">
+
+            <h1>
+                Interview Result
+            </h1>
+
+            <p style="color: #6b7280; margin-top: 8px;">
+                Review your answer and AI-generated feedback.
+            </p>
+
+        </div>
+
+
+        <!-- QUESTION -->
+
+        <div class="result-box">
+
+            <h2>
+                Question
+            </h2>
+
+            <p style="margin-top: 15px;">
+                {{ question }}
+            </p>
+
+        </div>
+
+
+        <!-- ANSWER -->
+
+        <div class="result-box">
+
+            <h2>
+                Your Answer
+            </h2>
+
+            <p style="margin-top: 15px; white-space: pre-line;">
+                {{ answer }}
+            </p>
+
+        </div>
+
+
+        <!-- AI EVALUATION -->
+
+        <div class="result-box">
+
+            <h2>
+                AI Evaluation
+            </h2>
+
+            <div
+                class="evaluation"
+                style="margin-top: 15px;"
+            >
+                {{ evaluation }}
+            </div>
+
+        </div>
+
+
+        <!-- ACTIONS -->
+
+        <div style="text-align: center;">
+
+            <a
+                href="/interview"
+                class="btn"
+            >
+                Try Another Interview
+            </a>
+
+            &nbsp;
+
+            <a
+                href="/dashboard"
+                class="btn"
+            >
+                Dashboard
+            </a>
+
+        </div>
+
+    </main>
+
+
+    <!-- JAVASCRIPT -->
+
+    <script
+        src="{{ url_for('static', filename='js/script.js') }}">
+    </script>
+
+</body>
+
+</html>

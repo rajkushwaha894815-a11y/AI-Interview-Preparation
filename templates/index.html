@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Interview Preparation</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="navbar">
+
+        <div class="container">
+
+            <div class="logo">
+                AI Interview Prep
+            </div>
+
+            <ul class="nav-links">
+
+                <li>
+                    <a href="/">Home</a>
+                </li>
+
+                <li>
+                    <a href="/login">Login</a>
+                </li>
+
+                <li>
+                    <a href="/register">Register</a>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ================= HERO ================= -->
+
+    <section class="hero">
+
+        <div class="container">
+
+            <h1>
+                AI-Powered Interview Preparation
+            </h1>
+
+            <p>
+                Prepare for your next interview with AI-generated
+                questions, personalized feedback, performance tracking,
+                and multiple interview categories.
+            </p>
+
+            <a href="/register" class="btn">
+                Get Started
+            </a>
+
+            &nbsp;
+
+            <a href="/login" class="btn">
+                Login
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= FEATURES ================= -->
+
+    <section class="container">
+
+        <h2 style="text-align: center;">
+            Interview Categories
+        </h2>
+
+        <div class="card-grid">
+
+            <div class="card">
+
+                <h3>HR Interview</h3>
+
+                <p>
+                    Practice common HR and behavioral interview
+                    questions.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>Technical Interview</h3>
+
+                <p>
+                    Improve your technical interview preparation
+                    with AI-generated questions.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>Python Interview</h3>
+
+                <p>
+                    Practice Python programming and technical
+                    interview questions.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>Java Interview</h3>
+
+                <p>
+                    Prepare for Java concepts and programming
+                    interview questions.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>Aptitude Test</h3>
+
+                <p>
+                    Improve your quantitative, logical, and
+                    reasoning skills.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>Resume Based Interview</h3>
+
+                <p>
+                    Practice interview questions based on your
+                    resume and projects.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script
+        src="{{ url_for('static', filename='js/script.js') }}">
+    </script>
+
+</body>
+
+</html>

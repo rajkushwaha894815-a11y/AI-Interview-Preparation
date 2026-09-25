@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Resume Interview | AI Interview Preparation</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+
+        body {
+            background: #f5f7fb;
+        }
+
+        .resume-interview-page {
+            max-width: 900px;
+            margin: 45px auto;
+            padding: 20px;
+        }
+
+        .interview-card {
+            background: white;
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.07);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 15px;
+            border-radius: 50%;
+            background: #eef2ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+        }
+
+        .header h1 {
+            margin: 0;
+            color: #222;
+            font-size: 30px;
+        }
+
+        .header p {
+            color: #666;
+            line-height: 1.6;
+            margin-top: 10px;
+        }
+
+        .badge {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 7px 14px;
+            border-radius: 20px;
+            background: #eef2ff;
+            color: #4f46e5;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 9px;
+            color: #555;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 10px;
+            background: #e5e7eb;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #4f46e5;
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+
+        .question-box {
+            background: #f8faff;
+            border-left: 5px solid #4f46e5;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 25px;
+        }
+
+        .question-label {
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #777;
+            margin-bottom: 8px;
+        }
+
+        .question {
+            margin: 0;
+            color: #222;
+            font-size: 21px;
+            line-height: 1.6;
+        }
+
+        .answer-label {
+            display: block;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 9px;
+        }
+
+        .answer-box {
+            width: 100%;
+            min-height: 180px;
+            padding: 16px;
+            border: 1px solid #d7dbe5;
+            border-radius: 12px;
+            resize: vertical;
+            box-sizing: border-box;
+            font-family: inherit;
+            font-size: 16px;
+            line-height: 1.6;
+            outline: none;
+        }
+
+        .answer-box:focus {
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .bottom-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tip {
+            color: #777;
+            font-size: 14px;
+        }
+
+        .submit-button {
+            border: none;
+            background: #4f46e5;
+            color: white;
+            padding: 13px 25px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .submit-button:hover {
+            background: #4338ca;
+            transform: translateY(-1px);
+        }
+
+        .resume-note {
+            margin-top: 25px;
+            padding: 15px;
+            border-radius: 10px;
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 600px) {
+
+            .resume-interview-page {
+                margin: 20px auto;
+                padding: 12px;
+            }
+
+            .interview-card {
+                padding: 22px;
+            }
+
+            .header h1 {
+                font-size: 25px;
+            }
+
+            .question {
+                font-size: 18px;
+            }
+
+            .bottom-section {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .submit-button {
+                width: 100%;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    {% include 'navbar.html' ignore missing %}
+
+    <div class="resume-interview-page">
+
+        <div class="interview-card">
+
+            <!-- HEADER -->
+
+            <div class="header">
+
+                <div class="header-icon">
+                    📄
+                </div>
+
+                <h1>
+                    Resume Based Interview
+                </h1>
+
+                <span class="badge">
+                    AI Resume Interview
+                </span>
+
+                <p>
+                    Answer questions based on the information,
+                    skills and projects found in your resume.
+                </p>
+
+            </div>
+
+
+            <!-- PROGRESS -->
+
+            <div class="progress-info">
+
+                <span>
+                    Question {{ question_number }} of {{ total_questions }}
+                </span>
+
+                <span>
+                    {{ ((question_number / total_questions) * 100)|round|int }}%
+                </span>
+
+            </div>
+
+            <div class="progress-container">
+
+                <div
+                    class="progress-bar"
+                    style="width: {{ (question_number / total_questions) * 100 }}%;">
+                </div>
+
+            </div>
+
+
+            <!-- QUESTION -->
+
+            <div class="question-box">
+
+                <div class="question-label">
+                    Interview Question
+                </div>
+
+                <h2 class="question">
+                    {{ question }}
+                </h2>
+
+            </div>
+
+
+            <!-- ANSWER -->
+
+            <form
+                action="{{ url_for('submit_resume_answer') }}"
+                method="POST"
+            >
+
+                <label
+                    for="answer"
+                    class="answer-label"
+                >
+                    Your Answer
+                </label>
+
+                <textarea
+                    id="answer"
+                    name="answer"
+                    class="answer-box"
+                    placeholder="Type your answer here..."
+                    required
+                ></textarea>
+
+
+                <div class="bottom-section">
+
+                    <div class="tip">
+                        💡 Give a clear answer using examples from your resume.
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="submit-button"
+                    >
+
+                        {% if question_number == total_questions %}
+                            Finish Interview
+                        {% else %}
+                            Next Question →
+                        {% endif %}
+
+                    </button>
+
+                </div>
+
+            </form>
+
+
+            <div class="resume-note">
+
+                <strong>Tip:</strong>
+                Try to explain your projects, skills and experiences
+                clearly. The interviewer may ask follow-up questions
+                based on the information in your resume.
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+
+</html>
