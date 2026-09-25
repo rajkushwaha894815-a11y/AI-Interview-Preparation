@@ -7,376 +7,1746 @@
 
     <title>Dashboard | AI Interview Preparation</title>
 
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
 
     <style>
 
-        body {
-            background: #f5f7fb;
-        }
+        /* =====================================================
+           RESET
+        ===================================================== */
 
-        .dashboard-container {
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 20px;
-        }
-
-        /* =========================
-           HEADER
-        ========================= */
-
-        .dashboard-header {
-            background: white;
-            padding: 30px;
-            border-radius: 18px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
-            margin-bottom: 25px;
-        }
-
-        .dashboard-header h1 {
+        * {
             margin: 0;
-            font-size: 30px;
-            color: #222;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .dashboard-header p {
-            margin: 8px 0 0;
-            color: #666;
+        html {
+            scroll-behavior: smooth;
         }
 
-        /* =========================
+        body {
+            font-family: "Inter", sans-serif;
+            background: #07111f;
+            color: #f8fafc;
+            min-height: 100vh;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button {
+            font-family: inherit;
+        }
+
+
+        /* =====================================================
+           APP LAYOUT
+        ===================================================== */
+
+        .app-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+
+        /* =====================================================
+           SIDEBAR
+        ===================================================== */
+
+        .sidebar {
+            width: 255px;
+            min-height: 100vh;
+
+            position: fixed;
+            left: 0;
+            top: 0;
+
+            display: flex;
+            flex-direction: column;
+
+            padding: 24px 16px;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #07121f 0%,
+                    #06101b 55%,
+                    #050d17 100%
+                );
+
+            border-right: 1px solid rgba(148, 163, 184, 0.12);
+
+            z-index: 100;
+        }
+
+
+        /* Brand */
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            padding: 4px 10px 30px;
+        }
+
+        .brand-logo {
+            width: 44px;
+            height: 44px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 13px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #22d3ee,
+                    #3b82f6
+                );
+
+            box-shadow:
+                0 0 25px rgba(34, 211, 238, 0.32);
+
+            color: white;
+
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .brand-text h2 {
+            font-size: 17px;
+            font-weight: 800;
+
+            color: #ffffff;
+
+            letter-spacing: -0.3px;
+        }
+
+        .brand-text span {
+            display: block;
+
+            margin-top: 2px;
+
+            color: #64748b;
+
+            font-size: 10px;
+            font-weight: 600;
+
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+
+        /* Sidebar heading */
+
+        .sidebar-heading {
+            padding: 0 11px;
+            margin: 5px 0 10px;
+
+            color: #475569;
+
+            font-size: 10px;
+            font-weight: 700;
+
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+        }
+
+
+        /* Navigation */
+
+        .side-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .nav-item {
+            position: relative;
+
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            padding: 12px 13px;
+
+            border: 1px solid transparent;
+            border-radius: 12px;
+
+            color: #94a3b8;
+
+            font-size: 13px;
+            font-weight: 600;
+
+            transition: all 0.25s ease;
+        }
+
+        .nav-item:hover {
+            background: rgba(30, 41, 59, 0.60);
+            color: #e2e8f0;
+        }
+
+        .nav-item.active {
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(14, 165, 233, 0.17),
+                    rgba(59, 130, 246, 0.10)
+                );
+
+            border-color: rgba(56, 189, 248, 0.25);
+
+            color: #ffffff;
+
+            box-shadow:
+                inset 0 0 25px rgba(14, 165, 233, 0.04),
+                0 8px 20px rgba(0, 0, 0, 0.20);
+        }
+
+        .nav-item.active::before {
+            content: "";
+
+            position: absolute;
+
+            left: -16px;
+            top: 8px;
+            bottom: 8px;
+
+            width: 3px;
+
+            border-radius: 0 4px 4px 0;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #22d3ee,
+                    #3b82f6
+                );
+
+            box-shadow:
+                0 0 12px rgba(34, 211, 238, 0.5);
+        }
+
+        .nav-icon {
+            width: 20px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 17px;
+        }
+
+
+        /* Sidebar bottom */
+
+        .sidebar-bottom {
+            margin-top: auto;
+            padding-top: 25px;
+        }
+
+        .profile-box {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+
+            padding: 13px;
+
+            border-radius: 13px;
+
+            background:
+                rgba(15, 23, 42, 0.72);
+
+            border: 1px solid rgba(148, 163, 184, 0.10);
+        }
+
+        .avatar {
+            width: 38px;
+            height: 38px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            flex-shrink: 0;
+
+            border-radius: 50%;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #06b6d4,
+                    #2563eb
+                );
+
+            color: white;
+
+            font-size: 14px;
+            font-weight: 800;
+        }
+
+        .profile-info {
+            min-width: 0;
+        }
+
+        .profile-info strong {
+            display: block;
+
+            color: #f8fafc;
+
+            font-size: 12px;
+
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .profile-info span {
+            color: #64748b;
+            font-size: 10px;
+        }
+
+        .logout-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            margin-top: 10px;
+
+            padding: 10px 13px;
+
+            color: #64748b;
+
+            border-radius: 10px;
+
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .logout-link:hover {
+            color: #f8fafc;
+            background: rgba(239, 68, 68, 0.08);
+        }
+
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
+
+        .main {
+            width: calc(100% - 255px);
+            margin-left: 255px;
+
+            min-height: 100vh;
+
+            padding: 28px 30px 45px;
+
+            background:
+                radial-gradient(
+                    circle at 80% 0%,
+                    rgba(14, 165, 233, 0.06),
+                    transparent 28%
+                ),
+                radial-gradient(
+                    circle at 35% 20%,
+                    rgba(59, 130, 246, 0.04),
+                    transparent 25%
+                ),
+                #07111f;
+        }
+
+
+        /* =====================================================
+           TOP BAR
+        ===================================================== */
+
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 34px;
+        }
+
+        .page-title h1 {
+            color: #f8fafc;
+
+            font-size: 31px;
+            font-weight: 800;
+
+            letter-spacing: -1px;
+        }
+
+        .page-title p {
+            margin-top: 6px;
+
+            color: #64748b;
+
+            font-size: 13px;
+        }
+
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .date-pill {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            padding: 9px 13px;
+
+            border-radius: 10px;
+
+            background: rgba(15, 23, 42, 0.80);
+
+            border: 1px solid rgba(148, 163, 184, 0.10);
+
+            color: #94a3b8;
+
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .live-dot {
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: #22c55e;
+
+            box-shadow:
+                0 0 12px rgba(34, 197, 94, 0.70);
+        }
+
+
+        /* =====================================================
            STAT CARDS
-        ========================= */
+        ===================================================== */
 
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 18px;
-            margin-bottom: 30px;
+
+            grid-template-columns:
+                repeat(4, minmax(0, 1fr));
+
+            gap: 16px;
+
+            margin-bottom: 20px;
         }
 
         .stat-card {
-            background: white;
-            padding: 24px;
+            position: relative;
+
+            overflow: hidden;
+
+            padding: 19px;
+
+            min-height: 126px;
+
             border-radius: 16px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(20, 37, 57, 0.96),
+                    rgba(10, 24, 40, 0.97)
+                );
+
+            border: 1px solid rgba(148, 163, 184, 0.10);
+
+            box-shadow:
+                0 12px 30px rgba(0, 0, 0, 0.22);
+
+            transition: all 0.25s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+
+            border-color:
+                rgba(56, 189, 248, 0.20);
+
+            box-shadow:
+                0 16px 35px rgba(0, 0, 0, 0.30);
+        }
+
+        .stat-card::after {
+            content: "";
+
+            position: absolute;
+
+            width: 100px;
+            height: 100px;
+
+            right: -42px;
+            top: -45px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(14, 165, 233, 0.08);
+        }
+
+        .stat-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
         .stat-icon {
-            font-size: 28px;
-            margin-bottom: 12px;
+            width: 38px;
+            height: 38px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 11px;
+
+            background:
+                rgba(14, 165, 233, 0.10);
+
+            border:
+                1px solid rgba(56, 189, 248, 0.16);
+
+            font-size: 17px;
         }
 
-        .stat-title {
-            color: #777;
-            font-size: 14px;
-            margin-bottom: 7px;
+        .stat-change {
+            color: #22c55e;
+
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .stat-label {
+            margin-top: 14px;
+
+            color: #64748b;
+
+            font-size: 10px;
+            font-weight: 600;
+
+            text-transform: uppercase;
+            letter-spacing: 0.7px;
         }
 
         .stat-value {
-            font-size: 28px;
-            font-weight: 700;
-            color: #222;
-        }
+            margin-top: 3px;
 
-        /* =========================
-           MAIN GRID
-        ========================= */
+            color: #f8fafc;
 
-        .main-grid {
-            display: grid;
-            grid-template-columns: 1.5fr 1fr;
-            gap: 25px;
-        }
-
-        .dashboard-section {
-            background: white;
-            padding: 28px;
-            border-radius: 18px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
-            margin-bottom: 25px;
-        }
-
-        .dashboard-section h2 {
-            margin-top: 0;
-            color: #222;
-            font-size: 21px;
-        }
-
-        /* =========================
-           INTERVIEW CARDS
-        ========================= */
-
-        .history-card {
-            border: 1px solid #e7e9ef;
-            border-radius: 12px;
-            padding: 17px;
-            margin-bottom: 12px;
-        }
-
-        .history-top {
-            display: flex;
-            justify-content: space-between;
-            gap: 15px;
-            align-items: center;
-        }
-
-        .history-type {
-            font-weight: 700;
-            color: #333;
-        }
-
-        .history-date {
-            font-size: 13px;
-            color: #888;
-        }
-
-        .history-score {
-            margin-top: 10px;
-            font-size: 14px;
-            color: #555;
-        }
-
-        .score-value {
-            font-weight: 700;
-            color: #4f46e5;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 30px 10px;
-            color: #777;
-        }
-
-        /* =========================
-           QUICK ACTIONS
-        ========================= */
-
-        .action-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 14px;
-        }
-
-        .action-card {
-            text-decoration: none;
-            background: #f8faff;
-            border: 1px solid #e5e7ef;
-            border-radius: 12px;
-            padding: 18px;
-            color: #222;
-            transition: 0.2s;
-        }
-
-        .action-card:hover {
-            transform: translateY(-2px);
-            border-color: #4f46e5;
-        }
-
-        .action-icon {
             font-size: 25px;
-            margin-bottom: 8px;
+            font-weight: 800;
         }
 
-        .action-card h3 {
-            margin: 0 0 5px;
+
+        /* =====================================================
+           CONTENT GRID
+        ===================================================== */
+
+        .content-grid {
+            display: grid;
+
+            grid-template-columns:
+                minmax(0, 1.55fr)
+                minmax(290px, 0.85fr);
+
+            gap: 18px;
+        }
+
+
+        /* =====================================================
+           PANEL
+        ===================================================== */
+
+        .panel {
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(14, 28, 46, 0.97),
+                    rgba(7, 19, 32, 0.98)
+                );
+
+            border: 1px solid rgba(148, 163, 184, 0.10);
+
+            border-radius: 17px;
+
+            box-shadow:
+                0 15px 35px rgba(0, 0, 0, 0.22);
+
+            overflow: hidden;
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 18px 19px;
+
+            border-bottom:
+                1px solid rgba(148, 163, 184, 0.08);
+        }
+
+        .panel-header h2 {
+            color: #f1f5f9;
+
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .panel-header p {
+            margin-top: 3px;
+
+            color: #64748b;
+
+            font-size: 10px;
+        }
+
+        .panel-badge {
+            padding: 5px 9px;
+
+            border-radius: 999px;
+
+            background: rgba(34, 197, 94, 0.08);
+
+            border:
+                1px solid rgba(34, 197, 94, 0.14);
+
+            color: #4ade80;
+
+            font-size: 9px;
+            font-weight: 700;
+
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+        }
+
+
+        /* =====================================================
+           MOCK INTERVIEW CARD
+        ===================================================== */
+
+        .mock-panel {
+            min-height: 355px;
+        }
+
+        .mock-content {
+            display: grid;
+
+            grid-template-columns:
+                1.2fr
+                0.8fr;
+
+            min-height: 295px;
+        }
+
+        .mock-visual {
+            position: relative;
+
+            min-height: 295px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            overflow: hidden;
+
+            background:
+                radial-gradient(
+                    circle at center,
+                    rgba(14, 165, 233, 0.12),
+                    transparent 32%
+                ),
+                linear-gradient(
+                    145deg,
+                    #08192a,
+                    #07111f
+                );
+
+            border-right:
+                1px solid rgba(148, 163, 184, 0.08);
+        }
+
+        .mock-ring {
+            position: relative;
+
+            width: 168px;
+            height: 168px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            border:
+                1px solid rgba(56, 189, 248, 0.25);
+
+            box-shadow:
+                0 0 30px rgba(14, 165, 233, 0.10),
+                inset 0 0 30px rgba(14, 165, 233, 0.05);
+        }
+
+        .mock-ring::before {
+            content: "";
+
+            position: absolute;
+
+            width: 123px;
+            height: 123px;
+
+            border-radius: 50%;
+
+            border:
+                1px solid rgba(56, 189, 248, 0.40);
+
+            box-shadow:
+                0 0 20px rgba(34, 211, 238, 0.12);
+        }
+
+        .mock-ring::after {
+            content: "";
+
+            position: absolute;
+
+            width: 78px;
+            height: 78px;
+
+            border-radius: 50%;
+
+            border:
+                2px solid rgba(34, 211, 238, 0.70);
+
+            box-shadow:
+                0 0 22px rgba(34, 211, 238, 0.18);
+        }
+
+        .mock-icon {
+            position: relative;
+            z-index: 2;
+
+            font-size: 31px;
+
+            filter:
+                drop-shadow(
+                    0 0 10px rgba(34, 211, 238, 0.40)
+                );
+        }
+
+        .visual-corner {
+            position: absolute;
+
+            width: 28px;
+            height: 28px;
+
+            border-color: rgba(34, 211, 238, 0.65);
+        }
+
+        .corner-1 {
+            left: 24px;
+            top: 22px;
+
+            border-top: 2px solid;
+            border-left: 2px solid;
+        }
+
+        .corner-2 {
+            right: 24px;
+            bottom: 22px;
+
+            border-right: 2px solid;
+            border-bottom: 2px solid;
+        }
+
+
+        /* Mock info */
+
+        .mock-info {
+            padding: 28px 24px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .mock-info h3 {
+            color: #f8fafc;
+
+            font-size: 21px;
+            font-weight: 800;
+
+            letter-spacing: -0.4px;
+        }
+
+        .mock-info > p {
+            margin-top: 9px;
+
+            color: #64748b;
+
+            font-size: 12px;
+
+            line-height: 1.6;
+        }
+
+        .mock-features {
+            display: grid;
+
+            gap: 9px;
+
+            margin-top: 19px;
+        }
+
+        .mock-feature {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+
+            color: #94a3b8;
+
+            font-size: 11px;
+        }
+
+        .check {
+            width: 20px;
+            height: 20px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 7px;
+
+            background: rgba(34, 197, 94, 0.08);
+
+            color: #4ade80;
+
+            font-size: 10px;
+        }
+
+        .start-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            margin-top: 21px;
+
+            padding: 11px 18px;
+
+            border-radius: 10px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #0ea5e9,
+                    #2563eb
+                );
+
+            color: white;
+
+            font-size: 11px;
+            font-weight: 700;
+
+            box-shadow:
+                0 8px 22px rgba(14, 165, 233, 0.18);
+
+            transition: all 0.25s ease;
+        }
+
+        .start-btn:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 12px 28px rgba(14, 165, 233, 0.28);
+        }
+
+
+        /* =====================================================
+           QUICK ACTIONS
+        ===================================================== */
+
+        .quick-actions {
+            display: grid;
+
+            gap: 9px;
+
+            padding: 15px;
+        }
+
+        .quick-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            padding: 12px;
+
+            border-radius: 11px;
+
+            background: rgba(15, 23, 42, 0.58);
+
+            border:
+                1px solid rgba(148, 163, 184, 0.08);
+
+            transition: all 0.25s ease;
+        }
+
+        .quick-item:hover {
+            background: rgba(30, 41, 59, 0.90);
+
+            border-color:
+                rgba(56, 189, 248, 0.16);
+
+            transform: translateX(2px);
+        }
+
+        .quick-icon {
+            width: 38px;
+            height: 38px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            flex-shrink: 0;
+
+            border-radius: 10px;
+
+            background:
+                rgba(14, 165, 233, 0.09);
+
+            border:
+                1px solid rgba(56, 189, 248, 0.12);
+
+            font-size: 17px;
+        }
+
+        .quick-info {
+            flex: 1;
+        }
+
+        .quick-info strong {
+            display: block;
+
+            color: #e2e8f0;
+
+            font-size: 11px;
+        }
+
+        .quick-info span {
+            display: block;
+
+            margin-top: 2px;
+
+            color: #64748b;
+
+            font-size: 9px;
+        }
+
+        .arrow {
+            color: #475569;
+            font-size: 14px;
+        }
+
+
+        /* =====================================================
+           BOTTOM GRID
+        ===================================================== */
+
+        .bottom-grid {
+            display: grid;
+
+            grid-template-columns:
+                minmax(0, 1.2fr)
+                minmax(280px, 0.8fr);
+
+            gap: 18px;
+
+            margin-top: 18px;
+        }
+
+
+        /* =====================================================
+           RECENT INTERVIEWS
+        ===================================================== */
+
+        .recent-list {
+            padding: 7px 15px 15px;
+        }
+
+        .recent-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 15px;
+
+            padding: 13px 5px;
+
+            border-bottom:
+                1px solid rgba(148, 163, 184, 0.07);
+        }
+
+        .recent-item:last-child {
+            border-bottom: none;
+        }
+
+        .recent-left {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+
+            min-width: 0;
+        }
+
+        .recent-avatar {
+            width: 37px;
+            height: 37px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            flex-shrink: 0;
+
+            border-radius: 10px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(14, 165, 233, 0.15),
+                    rgba(59, 130, 246, 0.12)
+                );
+
+            border:
+                1px solid rgba(56, 189, 248, 0.12);
+
             font-size: 16px;
         }
 
-        .action-card p {
-            margin: 0;
-            font-size: 13px;
-            color: #777;
+        .recent-info {
+            min-width: 0;
         }
 
-        /* =========================
-           PERFORMANCE
-        ========================= */
+        .recent-info strong {
+            display: block;
 
-        .performance-box {
-            text-align: center;
-            padding: 10px 0;
+            color: #e2e8f0;
+
+            font-size: 11px;
+
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        .performance-score {
-            font-size: 52px;
+        .recent-info span {
+            display: block;
+
+            margin-top: 2px;
+
+            color: #64748b;
+
+            font-size: 9px;
+        }
+
+        .recent-score {
+            color: #22d3ee;
+
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .view-history {
+            display: block;
+
+            padding: 2px 5px 15px;
+
+            color: #38bdf8;
+
+            font-size: 10px;
             font-weight: 700;
-            color: #4f46e5;
+
+            text-align: right;
         }
 
-        .performance-label {
-            color: #777;
-            margin-top: -5px;
+        .view-history:hover {
+            color: #7dd3fc;
+        }
+
+
+        /* =====================================================
+           PERFORMANCE
+        ===================================================== */
+
+        .performance-content {
+            padding: 20px;
+        }
+
+        .performance-main {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .score-circle {
+            width: 104px;
+            height: 104px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            flex-shrink: 0;
+
+            border-radius: 50%;
+
+            background:
+                conic-gradient(
+                    #22d3ee 0deg,
+                    #3b82f6 260deg,
+                    rgba(51, 65, 85, 0.35) 260deg,
+                    rgba(51, 65, 85, 0.35) 360deg
+                );
+
+            position: relative;
+        }
+
+        .score-circle::before {
+            content: "";
+
+            position: absolute;
+
+            width: 79px;
+            height: 79px;
+
+            border-radius: 50%;
+
+            background: #091523;
+
+            border:
+                1px solid rgba(148, 163, 184, 0.08);
+        }
+
+        .score-number {
+            position: relative;
+            z-index: 2;
+
+            color: #f8fafc;
+
+            font-size: 23px;
+            font-weight: 800;
+        }
+
+        .score-number span {
+            color: #64748b;
+            font-size: 10px;
+        }
+
+        .performance-text h3 {
+            color: #f8fafc;
+
+            font-size: 14px;
+        }
+
+        .performance-text p {
+            margin-top: 6px;
+
+            color: #64748b;
+
+            font-size: 10px;
+            line-height: 1.6;
         }
 
         .performance-message {
-            margin-top: 20px;
-            padding: 15px;
-            background: #f8faff;
-            border-radius: 12px;
-            color: #555;
-            line-height: 1.5;
+            margin-top: 17px;
+
+            padding: 12px;
+
+            border-radius: 10px;
+
+            background:
+                rgba(14, 165, 233, 0.05);
+
+            border:
+                1px solid rgba(56, 189, 248, 0.08);
+
+            color: #94a3b8;
+
+            font-size: 10px;
+
+            line-height: 1.6;
         }
 
-        /* =========================
-           BUTTON
-        ========================= */
 
-        .primary-btn {
-            display: inline-block;
-            text-decoration: none;
-            background: #4f46e5;
-            color: white;
-            padding: 11px 18px;
-            border-radius: 9px;
-            font-weight: 600;
-            margin-top: 12px;
+        /* =====================================================
+           EMPTY STATE
+        ===================================================== */
+
+        .empty-state {
+            padding: 30px 20px;
+
+            text-align: center;
+
+            color: #64748b;
+
+            font-size: 11px;
         }
 
-        .primary-btn:hover {
-            background: #4338ca;
+        .empty-icon {
+            font-size: 27px;
+            margin-bottom: 8px;
         }
 
-        /* =========================
+
+        /* =====================================================
+           MOBILE TOPBAR
+        ===================================================== */
+
+        .mobile-topbar {
+            display: none;
+        }
+
+
+        /* =====================================================
            RESPONSIVE
-        ========================= */
+        ===================================================== */
 
-        @media (max-width: 900px) {
+        @media (max-width: 1100px) {
 
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
+            .sidebar {
+                width: 220px;
             }
 
-            .main-grid {
+            .main {
+                width: calc(100% - 220px);
+                margin-left: 220px;
+                padding: 24px 22px 40px;
+            }
+
+            .stats-grid {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+            }
+
+            .content-grid,
+            .bottom-grid {
                 grid-template-columns: 1fr;
             }
         }
 
-        @media (max-width: 550px) {
 
-            .dashboard-container {
-                margin: 20px auto;
-                padding: 12px;
+        @media (max-width: 760px) {
+
+            .sidebar {
+                position: fixed;
+
+                left: -260px;
+
+                transition: left 0.3s ease;
             }
 
-            .dashboard-header {
-                padding: 22px;
+            .sidebar.open {
+                left: 0;
             }
 
-            .dashboard-header h1 {
-                font-size: 24px;
+            .main {
+                width: 100%;
+                margin-left: 0;
+
+                padding: 18px 15px 35px;
             }
+
+            .mobile-topbar {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                margin-bottom: 18px;
+            }
+
+            .mobile-menu-btn {
+                width: 40px;
+                height: 40px;
+
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                border: 1px solid rgba(148, 163, 184, 0.12);
+                border-radius: 10px;
+
+                background: rgba(15, 23, 42, 0.7);
+
+                color: #e2e8f0;
+
+                cursor: pointer;
+            }
+
+            .topbar {
+                margin-bottom: 25px;
+            }
+
+            .page-title h1 {
+                font-size: 26px;
+            }
+
+            .date-pill {
+                display: none;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+
+            .stat-card {
+                min-height: 115px;
+                padding: 14px;
+            }
+
+            .stat-value {
+                font-size: 21px;
+            }
+
+            .mock-content {
+                grid-template-columns: 1fr;
+            }
+
+            .mock-visual {
+                min-height: 220px;
+
+                border-right: none;
+
+                border-bottom:
+                    1px solid rgba(148, 163, 184, 0.08);
+            }
+
+            .mock-ring {
+                width: 130px;
+                height: 130px;
+            }
+
+            .mock-ring::before {
+                width: 95px;
+                height: 95px;
+            }
+
+            .mock-ring::after {
+                width: 60px;
+                height: 60px;
+            }
+
+            .mock-info {
+                padding: 22px 19px;
+            }
+
+            .performance-main {
+                align-items: flex-start;
+            }
+        }
+
+
+        @media (max-width: 460px) {
 
             .stats-grid {
                 grid-template-columns: 1fr;
             }
 
-            .action-grid {
-                grid-template-columns: 1fr;
+            .topbar {
+                align-items: flex-start;
             }
 
-            .history-top {
-                flex-direction: column;
+            .page-title h1 {
+                font-size: 23px;
+            }
+
+            .panel-header {
+                padding: 15px;
+            }
+
+            .recent-item {
                 align-items: flex-start;
+            }
+
+            .score-circle {
+                width: 88px;
+                height: 88px;
+            }
+
+            .score-circle::before {
+                width: 67px;
+                height: 67px;
+            }
+
+            .score-number {
+                font-size: 19px;
             }
         }
 
     </style>
 </head>
 
+
 <body>
 
-    {% include 'navbar.html' ignore missing %}
+<div class="app-layout">
 
-    <div class="dashboard-container">
 
-        <!-- =========================
-             WELCOME HEADER
-        ========================= -->
+    <!-- =================================================
+         SIDEBAR
+    ================================================= -->
 
-        <div class="dashboard-header">
+    <aside class="sidebar" id="sidebar">
 
-            <h1>
-                Welcome back, {{ session.get('name', 'User') }} 👋
-            </h1>
+        <div class="brand">
 
-            <p>
-                Track your interview preparation and improve your performance.
-            </p>
+            <div class="brand-logo">
+                ✦
+            </div>
+
+            <div class="brand-text">
+
+                <h2>
+                    AI Interview
+                </h2>
+
+                <span>
+                    Smart Preparation
+                </span>
+
+            </div>
 
         </div>
 
 
-        <!-- =========================
-             STATISTICS
-        ========================= -->
+        <div class="sidebar-heading">
+            Main Menu
+        </div>
+
+
+        <nav class="side-nav">
+
+            <a
+                href="{{ url_for('dashboard') }}"
+                class="nav-item active"
+            >
+                <span class="nav-icon">⌂</span>
+                <span>Dashboard</span>
+            </a>
+
+
+            <a
+                href="{{ url_for('interview') }}"
+                class="nav-item"
+            >
+                <span class="nav-icon">◉</span>
+                <span>Interview</span>
+            </a>
+
+
+            <a
+                href="{{ url_for('resume') }}"
+                class="nav-item"
+            >
+                <span class="nav-icon">▣</span>
+                <span>Resume</span>
+            </a>
+
+
+            <a
+                href="{{ url_for('history') }}"
+                class="nav-item"
+            >
+                <span class="nav-icon">◷</span>
+                <span>History</span>
+            </a>
+
+        </nav>
+
+
+        {% if session.get('is_admin') %}
+
+        <div class="sidebar-heading" style="margin-top: 28px;">
+            Administration
+        </div>
+
+        <nav class="side-nav">
+
+            <a
+                href="{{ url_for('admin') }}"
+                class="nav-item"
+            >
+                <span class="nav-icon">◈</span>
+                <span>Admin Panel</span>
+            </a>
+
+        </nav>
+
+        {% endif %}
+
+
+        <div class="sidebar-bottom">
+
+            <div class="profile-box">
+
+                <div class="avatar">
+
+                    {{ session.get('name', 'U')[0]|upper }}
+
+                </div>
+
+                <div class="profile-info">
+
+                    <strong>
+                        {{ session.get('name', 'User') }}
+                    </strong>
+
+                    <span>
+                        {% if session.get('is_admin') %}
+                            Administrator
+                        {% else %}
+                            Interview Candidate
+                        {% endif %}
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <a
+                href="{{ url_for('logout') }}"
+                class="logout-link"
+            >
+                <span>↪</span>
+                Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =================================================
+         MAIN
+    ================================================= -->
+
+    <main class="main">
+
+
+        <!-- Mobile Menu -->
+
+        <div class="mobile-topbar">
+
+            <button
+                class="mobile-menu-btn"
+                onclick="toggleSidebar()"
+                aria-label="Open menu"
+            >
+                ☰
+            </button>
+
+            <div class="brand-text">
+
+                <h2 style="font-size:14px;">
+                    AI Interview
+                </h2>
+
+            </div>
+
+            <div></div>
+
+        </div>
+
+
+        <!-- =================================================
+             TOPBAR
+        ================================================= -->
+
+        <div class="topbar">
+
+            <div class="page-title">
+
+                <h1>
+                    Dashboard
+                    <span style="color:#22d3ee;">.</span>
+                </h1>
+
+                <p>
+                    Welcome back! Here's your interview preparation overview.
+                </p>
+
+            </div>
+
+
+            <div class="topbar-right">
+
+                <div class="date-pill">
+
+                    <span class="live-dot"></span>
+
+                    <span id="currentDate">
+                        Loading date...
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             STAT CARDS
+        ================================================= -->
 
         <div class="stats-grid">
 
+
+            <!-- Total Interviews -->
+
             <div class="stat-card">
 
-                <div class="stat-icon">
-                    🎤
+                <div class="stat-top">
+
+                    <div class="stat-icon">
+                        ◉
+                    </div>
+
+                    <div class="stat-change">
+                        ACTIVE
+                    </div>
+
                 </div>
 
-                <div class="stat-title">
+                <div class="stat-label">
                     Total Interviews
                 </div>
 
                 <div class="stat-value">
+
                     {{ performance.total_interviews if performance else 0 }}
+
                 </div>
 
             </div>
 
 
+            <!-- Average Score -->
+
             <div class="stat-card">
 
-                <div class="stat-icon">
-                    ⭐
+                <div class="stat-top">
+
+                    <div class="stat-icon">
+                        ★
+                    </div>
+
+                    <div class="stat-change">
+                        AVG
+                    </div>
+
                 </div>
 
-                <div class="stat-title">
+                <div class="stat-label">
                     Average Score
                 </div>
 
                 <div class="stat-value">
-                    {{ performance.average_score if performance else 0 }}/10
+
+                    {{ performance.average_score if performance else 0 }}
+
+                    <span style="
+                        font-size:11px;
+                        color:#64748b;
+                        font-weight:600;
+                    ">
+                        /10
+                    </span>
+
                 </div>
 
             </div>
 
 
+            <!-- Best Score -->
+
             <div class="stat-card">
 
-                <div class="stat-icon">
-                    🏆
+                <div class="stat-top">
+
+                    <div class="stat-icon">
+                        ◆
+                    </div>
+
+                    <div class="stat-change">
+                        BEST
+                    </div>
+
                 </div>
 
-                <div class="stat-title">
+                <div class="stat-label">
                     Best Score
                 </div>
 
                 <div class="stat-value">
-                    {{ performance.best_score if performance else 0 }}/10
+
+                    {{ performance.highest_score if performance else 0 }}
+
+                    <span style="
+                        font-size:11px;
+                        color:#64748b;
+                        font-weight:600;
+                    ">
+                        /10
+                    </span>
+
                 </div>
 
             </div>
 
 
+            <!-- Questions -->
+
             <div class="stat-card">
 
-                <div class="stat-icon">
-                    📝
+                <div class="stat-top">
+
+                    <div class="stat-icon">
+                        ?
+                    </div>
+
+                    <div class="stat-change">
+                        PRACTICE
+                    </div>
+
                 </div>
 
-                <div class="stat-title">
+                <div class="stat-label">
                     Questions Attempted
                 </div>
 
                 <div class="stat-value">
-                    {{ performance.total_questions if performance else 0 }}
+
+                    {{ interviews|length if interviews else 0 }}
+
                 </div>
 
             </div>
@@ -384,337 +1754,587 @@
         </div>
 
 
-        <!-- =========================
+        <!-- =================================================
              MAIN CONTENT
-        ========================= -->
+        ================================================= -->
 
-        <div class="main-grid">
-
-
-            <!-- LEFT SIDE -->
-
-            <div>
+        <div class="content-grid">
 
 
-                <!-- RECENT INTERVIEWS -->
+            <!-- =================================================
+                 MOCK INTERVIEW
+            ================================================= -->
 
-                <div class="dashboard-section">
+            <section class="panel mock-panel">
 
-                    <h2>
-                        Recent Interviews
-                    </h2>
+                <div class="panel-header">
 
+                    <div>
 
-                    {% if interviews %}
+                        <h2>
+                            AI Mock Interview
+                        </h2>
 
-                        {% for interview in interviews[:5] %}
+                        <p>
+                            Practice with dynamic field-based questions
+                        </p>
 
-                            <div class="history-card">
+                    </div>
 
-                                <div class="history-top">
-
-                                    <div class="history-type">
-
-                                        {{ interview.interview_type }}
-
-                                        {% if interview.difficulty %}
-                                            • {{ interview.difficulty }}
-                                        {% endif %}
-
-                                    </div>
-
-                                    <div class="history-date">
-
-                                        {{ interview.created_at }}
-
-                                    </div>
-
-                                </div>
-
-
-                                <div class="history-score">
-
-                                    Score:
-
-                                    <span class="score-value">
-                                        {{ interview.score }}/10
-                                    </span>
-
-                                </div>
-
-                            </div>
-
-                        {% endfor %}
-
-                        <a
-                            href="{{ url_for('history') }}"
-                            class="primary-btn"
-                        >
-                            View Complete History
-                        </a>
-
-                    {% else %}
-
-                        <div class="empty-state">
-
-                            <p>
-                                You haven't completed any interviews yet.
-                            </p>
-
-                            <a
-                                href="{{ url_for('interview') }}"
-                                class="primary-btn"
-                            >
-                                Start Your First Interview
-                            </a>
-
-                        </div>
-
-                    {% endif %}
+                    <div class="panel-badge">
+                        ● Live
+                    </div>
 
                 </div>
 
 
-                <!-- PERFORMANCE -->
+                <div class="mock-content">
 
-                <div class="dashboard-section">
 
-                    <h2>
-                        Your Performance
-                    </h2>
+                    <!-- Visual -->
 
-                    <div class="performance-box">
+                    <div class="mock-visual">
 
-                        <div class="performance-score">
+                        <div class="visual-corner corner-1"></div>
 
-                            {{ performance.average_score if performance else 0 }}
+                        <div class="visual-corner corner-2"></div>
 
-                            <span style="font-size: 22px;">
-                                /10
+                        <div class="mock-ring">
+
+                            <div class="mock-icon">
+                                🎤
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Information -->
+
+                    <div class="mock-info">
+
+                        <h3>
+                            Start Your Interview
+                        </h3>
+
+                        <p>
+                            Choose any field, topic, difficulty and
+                            question count. Practice at your own pace.
+                        </p>
+
+
+                        <div class="mock-features">
+
+                            <div class="mock-feature">
+
+                                <div class="check">
+                                    ✓
+                                </div>
+
+                                Any field or topic
+
+                            </div>
+
+
+                            <div class="mock-feature">
+
+                                <div class="check">
+                                    ✓
+                                </div>
+
+                                1–100 questions
+
+                            </div>
+
+
+                            <div class="mock-feature">
+
+                                <div class="check">
+                                    ✓
+                                </div>
+
+                                Instant evaluation
+
+                            </div>
+
+
+                            <div class="mock-feature">
+
+                                <div class="check">
+                                    ✓
+                                </div>
+
+                                Performance tracking
+
+                            </div>
+
+                        </div>
+
+
+                        <a
+                            href="{{ url_for('interview') }}"
+                            class="start-btn"
+                        >
+                            Start Interview →
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 QUICK ACTIONS
+            ================================================= -->
+
+            <section class="panel">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <h2>
+                            Quick Actions
+                        </h2>
+
+                        <p>
+                            Manage your preparation
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="quick-actions">
+
+
+                    <a
+                        href="{{ url_for('interview') }}"
+                        class="quick-item"
+                    >
+
+                        <div class="quick-icon">
+                            🎤
+                        </div>
+
+                        <div class="quick-info">
+
+                            <strong>
+                                Mock Interview
+                            </strong>
+
+                            <span>
+                                Start a new interview
                             </span>
 
                         </div>
 
-                        <div class="performance-label">
-                            Average Interview Score
+                        <div class="arrow">
+                            →
                         </div>
 
+                    </a>
 
-                        <div class="performance-message">
 
-                            {% if performance and performance.average_score >= 8 %}
+                    <a
+                        href="{{ url_for('resume') }}"
+                        class="quick-item"
+                    >
 
-                                Excellent performance! Keep practicing
-                                to maintain your interview skills.
-
-                            {% elif performance and performance.average_score >= 6 %}
-
-                                Good progress! Continue practicing to
-                                improve your confidence and accuracy.
-
-                            {% elif performance and performance.average_score > 0 %}
-
-                                Keep practicing. Regular mock interviews
-                                can help improve your performance.
-
-                            {% else %}
-
-                                Start your first mock interview to see
-                                your performance here.
-
-                            {% endif %}
-
+                        <div class="quick-icon">
+                            📄
                         </div>
 
-                    </div>
+                        <div class="quick-info">
 
-                </div>
-
-            </div>
-
-
-            <!-- RIGHT SIDE -->
-
-            <div>
-
-
-                <!-- QUICK ACTIONS -->
-
-                <div class="dashboard-section">
-
-                    <h2>
-                        Quick Actions
-                    </h2>
-
-
-                    <div class="action-grid">
-
-                        <a
-                            href="{{ url_for('interview') }}"
-                            class="action-card"
-                        >
-
-                            <div class="action-icon">
-                                🎤
-                            </div>
-
-                            <h3>
-                                Mock Interview
-                            </h3>
-
-                            <p>
-                                Start a 5-question interview.
-                            </p>
-
-                        </a>
-
-
-                        <a
-                            href="{{ url_for('resume') }}"
-                            class="action-card"
-                        >
-
-                            <div class="action-icon">
-                                📄
-                            </div>
-
-                            <h3>
+                            <strong>
                                 Resume Analysis
-                            </h3>
+                            </strong>
 
-                            <p>
-                                Analyze your resume.
-                            </p>
+                            <span>
+                                Analyze your resume
+                            </span>
 
-                        </a>
+                        </div>
 
+                        <div class="arrow">
+                            →
+                        </div>
 
-                        <a
-                            href="{{ url_for('history') }}"
-                            class="action-card"
-                        >
-
-                            <div class="action-icon">
-                                📊
-                            </div>
-
-                            <h3>
-                                Interview History
-                            </h3>
-
-                            <p>
-                                Review your previous attempts.
-                            </p>
-
-                        </a>
+                    </a>
 
 
-                        <a
-                            href="{{ url_for('resume_interview') }}"
-                            class="action-card"
-                        >
+                    <a
+                        href="{{ url_for('resume_interview') }}"
+                        class="quick-item"
+                    >
 
-                            <div class="action-icon">
-                                🧠
-                            </div>
+                        <div class="quick-icon">
+                            🧠
+                        </div>
 
-                            <h3>
+                        <div class="quick-info">
+
+                            <strong>
                                 Resume Interview
-                            </h3>
+                            </strong>
 
-                            <p>
-                                Practice resume-based questions.
-                            </p>
+                            <span>
+                                Practice from your resume
+                            </span>
 
-                        </a>
+                        </div>
 
-                    </div>
+                        <div class="arrow">
+                            →
+                        </div>
 
-                </div>
-
-
-                <!-- INTERVIEW TYPES -->
-
-                <div class="dashboard-section">
-
-                    <h2>
-                        Practice Categories
-                    </h2>
+                    </a>
 
 
-                    <div class="action-grid">
+                    <a
+                        href="{{ url_for('history') }}"
+                        class="quick-item"
+                    >
 
-                        <a
-                            href="{{ url_for('interview') }}"
-                            class="action-card"
-                        >
-                            <div class="action-icon">🐍</div>
-                            <h3>Python</h3>
-                            <p>Practice Python questions.</p>
-                        </a>
+                        <div class="quick-icon">
+                            📊
+                        </div>
 
+                        <div class="quick-info">
 
-                        <a
-                            href="{{ url_for('interview') }}"
-                            class="action-card"
-                        >
-                            <div class="action-icon">☕</div>
-                            <h3>Java</h3>
-                            <p>Practice Java questions.</p>
-                        </a>
+                            <strong>
+                                Interview History
+                            </strong>
 
+                            <span>
+                                View your previous attempts
+                            </span>
 
-                        <a
-                            href="{{ url_for('interview') }}"
-                            class="action-card"
-                        >
-                            <div class="action-icon">💻</div>
-                            <h3>Technical</h3>
-                            <p>Test technical knowledge.</p>
-                        </a>
+                        </div>
 
+                        <div class="arrow">
+                            →
+                        </div>
 
-                        <a
-                            href="{{ url_for('interview') }}"
-                            class="action-card"
-                        >
-                            <div class="action-icon">👔</div>
-                            <h3>HR</h3>
-                            <p>Practice HR questions.</p>
-                        </a>
-
-
-                        <a
-                            href="{{ url_for('interview') }}"
-                            class="action-card"
-                        >
-                            <div class="action-icon">🧮</div>
-                            <h3>Aptitude</h3>
-                            <p>Practice aptitude questions.</p>
-                        </a>
-
-
-                        <a
-                            href="{{ url_for('resume') }}"
-                            class="action-card"
-                        >
-                            <div class="action-icon">📄</div>
-                            <h3>Resume</h3>
-                            <p>Prepare from your resume.</p>
-                        </a>
-
-                    </div>
+                    </a>
 
                 </div>
 
-            </div>
+            </section>
 
         </div>
 
-    </div>
+
+        <!-- =================================================
+             BOTTOM CONTENT
+        ================================================= -->
+
+        <div class="bottom-grid">
 
 
-    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+            <!-- =================================================
+                 RECENT INTERVIEWS
+            ================================================= -->
+
+            <section class="panel">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <h2>
+                            Recent Interviews
+                        </h2>
+
+                        <p>
+                            Your latest practice activity
+                        </p>
+
+                    </div>
+
+                    <span class="panel-badge">
+                        Recent
+                    </span>
+
+                </div>
+
+
+                {% if interviews %}
+
+                <div class="recent-list">
+
+                    {% for interview in interviews[:5] %}
+
+                    <div class="recent-item">
+
+
+                        <div class="recent-left">
+
+                            <div class="recent-avatar">
+
+                                {% if 'Python' in interview.interview_type %}
+                                    🐍
+                                {% elif 'Java' in interview.interview_type %}
+                                    ☕
+                                {% elif 'HR' in interview.interview_type %}
+                                    👔
+                                {% elif 'Technical' in interview.interview_type %}
+                                    💻
+                                {% else %}
+                                    🎯
+                                {% endif %}
+
+                            </div>
+
+
+                            <div class="recent-info">
+
+                                <strong>
+
+                                    {{ interview.interview_type }}
+
+                                    {% if interview.difficulty %}
+                                        · {{ interview.difficulty }}
+                                    {% endif %}
+
+                                </strong>
+
+                                <span>
+                                    {{ interview.created_at }}
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="recent-score">
+
+                            {{ interview.score }}/10
+
+                        </div>
+
+                    </div>
+
+                    {% endfor %}
+
+
+                    <a
+                        href="{{ url_for('history') }}"
+                        class="view-history"
+                    >
+                        View complete history →
+                    </a>
+
+                </div>
+
+                {% else %}
+
+                <div class="empty-state">
+
+                    <div class="empty-icon">
+                        🎯
+                    </div>
+
+                    <div>
+                        No interview attempts yet.
+                    </div>
+
+                    <a
+                        href="{{ url_for('interview') }}"
+                        class="start-btn"
+                        style="margin-top:14px;"
+                    >
+                        Start First Interview
+                    </a>
+
+                </div>
+
+                {% endif %}
+
+            </section>
+
+
+            <!-- =================================================
+                 PERFORMANCE
+            ================================================= -->
+
+            <section class="panel">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <h2>
+                            Your Performance
+                        </h2>
+
+                        <p>
+                            Overall interview progress
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="performance-content">
+
+
+                    <div class="performance-main">
+
+
+                        <div class="score-circle">
+
+                            <div class="score-number">
+
+                                {{ performance.average_score if performance else 0 }}
+
+                                <span>
+                                    /10
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="performance-text">
+
+                            <h3>
+                                Average Performance
+                            </h3>
+
+                            <p>
+
+                                {% if performance and performance.average_score >= 8 %}
+
+                                    Excellent consistency. Keep
+                                    practicing to maintain your level.
+
+                                {% elif performance and performance.average_score >= 6 %}
+
+                                    Good progress. Continue practicing
+                                    to improve accuracy and confidence.
+
+                                {% elif performance and performance.average_score > 0 %}
+
+                                    Keep practicing regularly to
+                                    strengthen your interview skills.
+
+                                {% else %}
+
+                                    Complete your first mock interview
+                                    to see your performance here.
+
+                                {% endif %}
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="performance-message">
+
+                        <strong style="color:#e2e8f0;">
+                            Tip:
+                        </strong>
+
+                        Practice different fields and topics regularly
+                        to build stronger interview confidence.
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<script>
+
+    /* =====================================================
+       CURRENT DATE
+    ===================================================== */
+
+    function updateDate() {
+
+        const dateElement =
+            document.getElementById("currentDate");
+
+        if (!dateElement) {
+            return;
+        }
+
+        const now = new Date();
+
+        const options = {
+            day: "2-digit",
+            month: "short",
+            year: "numeric"
+        };
+
+        dateElement.textContent =
+            now.toLocaleDateString("en-IN", options);
+
+    }
+
+    updateDate();
+
+
+    /* =====================================================
+       MOBILE SIDEBAR
+    ===================================================== */
+
+    function toggleSidebar() {
+
+        const sidebar =
+            document.getElementById("sidebar");
+
+        sidebar.classList.toggle("open");
+
+    }
+
+
+    /* =====================================================
+       CLOSE SIDEBAR WHEN LINK CLICKED ON MOBILE
+    ===================================================== */
+
+    document
+        .querySelectorAll(".nav-item")
+        .forEach(function (item) {
+
+            item.addEventListener(
+                "click",
+                function () {
+
+                    if (window.innerWidth <= 760) {
+
+                        const sidebar =
+                            document.getElementById("sidebar");
+
+                        sidebar.classList.remove("open");
+
+                    }
+
+                }
+            );
+
+        });
+
+</script>
 
 </body>
 
